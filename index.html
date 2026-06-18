@@ -190,8 +190,10 @@
     width: 100%;
   }
 
-  .ratio-portrait .canvas{ aspect-ratio: 4 / 5; }
-  .ratio-landscape .canvas{ aspect-ratio: 5 / 4; }
+  /* aspect-ratio only applies to the placeholder <div class="canvas">, not real <img> photos,
+     so uploaded images keep their true proportions instead of being stretched to fit */
+  .ratio-portrait div.canvas{ aspect-ratio: 4 / 5; }
+  .ratio-landscape div.canvas{ aspect-ratio: 5 / 4; }
 
   .canvas--gold{
     background:
@@ -218,7 +220,7 @@
       var(--wall-soft);
   }
 
-  .canvas-wrap::after{
+  .canvas-wrap:has(div.canvas)::after{
     content:"";
     position:absolute;
     inset:0;
@@ -334,9 +336,33 @@
 
   .about-grid{
     display:grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: 160px 1fr;
+    gap: 32px;
+    align-items: start;
   }
+
+  .about-photo-wrap{
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .about-photo{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-photo--placeholder{
+    aspect-ratio: 1 / 1;
+    background:
+      radial-gradient(circle at 35% 30%, #C9952A 0%, transparent 55%),
+      radial-gradient(circle at 70% 75%, #5A554C 0%, transparent 60%),
+      var(--wall-soft);
+  }
+
+  .about-text{ padding-top: 2px; }
 
   .about h3{
     font-family: var(--mono);
@@ -393,6 +419,10 @@
     }
     .frame{ width: 100%; }
     .label{ width: 100%; }
+    .about-grid{
+      grid-template-columns: 1fr;
+    }
+    .about-photo-wrap{ width: 120px; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -430,7 +460,7 @@
     <article class="piece">
       <div class="frame ratio-portrait">
         <div class="canvas-wrap">
-          <img class="canvas" src="images/AlooLeoPortraitPrint_v1_website.jpg" alt="Raamudu Bheemudu">
+          <img class="canvas" src="AlooLeoPortraitPrint_v1_website.jpg" alt="Raamudu Bheemudu">
           <div class="wipe"></div>
         </div>
       </div>
@@ -442,7 +472,7 @@
             <span class="swatch swatch--gold"></span>
           </div>
           <p class="meta">Oil on canvas · 16 × 20 in · 2026</p>
-          <p class="status status--available">Sold</p>
+          <p class="status status--sold">Sold</p>
         </div>
       </div>
     </article>
@@ -451,7 +481,7 @@
     <article class="piece">
       <div class="frame ratio-landscape">
         <div class="canvas-wrap">
-          <img class="canvas" src="images/HeadlightInBloomPrint_v1_website.jpg" alt="Headlight In Bloom">
+          <img class="canvas" src="HeadlightInBloomPrint_v1_website.jpg" alt="Headlight In Bloom">
           <div class="wipe"></div>
         </div>
       </div>
@@ -463,7 +493,7 @@
             <span class="swatch swatch--blue"></span>
           </div>
           <p class="meta">Oil on canvas · 20 × 16 in · 2026</p>
-          <p class="status status--available">Sold</p>
+          <p class="status status--sold">Sold</p>
         </div>
       </div>
     </article>
@@ -472,7 +502,7 @@
     <article class="piece">
       <div class="frame ratio-portrait">
         <div class="canvas-wrap">
-          <img class="canvas" src="images/WeddingBouquetPrint_v1_website.jpg" alt="A New Beginning">
+          <img class="canvas" src="WeddingBouquetPrint_v1_website.jpg" alt="A New Beginning">
           <div class="wipe"></div>
         </div>
       </div>
@@ -506,7 +536,7 @@
             <span class="swatch swatch--green"></span>
           </div>
           <p class="meta">Oil on canvas · 24 × 18 in · 2025</p>
-          <p class="status status--available">Sold</p>
+          <p class="status status--sold">Sold</p>
         </div>
       </div>
     </article>
@@ -515,8 +545,14 @@
 
   <section class="about wrap" id="about">
     <div class="about-grid">
-      <h3>About</h3>
-      <p>Teja paints in oil, working in thin layers until the color settles where it should. Based in Virginia, currently taking on a small number of commissions each season.</p>
+      <!-- Replace the placeholder div below with: <img class="about-photo" src="images/teja-portrait.jpg" alt="Teja"> -->
+      <div class="about-photo-wrap">
+        <img class="about-photo" src="images/AlooLeoPortraitPhotoshoot1_website.jpg" alt="Teja">
+      </div>
+      <div class="about-text">
+        <h3>About</h3>
+        <p>Teja paints in oil, working in thin layers until the color settles where it should. Based in Virginia, currently taking on a small number of commissions each season.</p>
+      </div>
     </div>
   </section>
 
