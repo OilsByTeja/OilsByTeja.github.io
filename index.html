@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oils by Teja — Original Oil Paintings</title>
+<meta name="description" content="Original oil paintings by Teja. View available work, inquire about commissions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wall: #ECE9E2;
+    --wall-soft: #E2DED4;
+    --ink: #1C1B19;
+    --ink-soft: #5A554C;
+    --hairline: #C9C4B8;
+    --gold: #C9952A;
+    --blue: #2A4B8C;
+    --red: #B8392B;
+    --green: #2F6B4F;
+    --serif: 'Fraunces', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--wall);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+
+  a:focus-visible,
+  button:focus-visible{
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  img, .canvas{ display:block; max-width:100%; }
+
+  .wrap{
+    max-width: 960px;
+    margin: 0 auto;
+    padding-inline: clamp(20px, 6vw, 56px);
+  }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: transparent;
+    transition: background-color .3s ease, border-color .3s ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  header.site.scrolled{
+    background: var(--wall);
+    border-bottom-color: var(--hairline);
+  }
+
+  .header-row{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding-block: 18px;
+  }
+
+  .wordmark{
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(16px, 2vw, 19px);
+    letter-spacing: 0.01em;
+  }
+
+  nav.primary{
+    display:flex;
+    gap: clamp(14px, 3vw, 28px);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  nav.primary a{
+    position: relative;
+    padding-bottom: 2px;
+    color: var(--ink-soft);
+    transition: color .2s ease;
+  }
+
+  nav.primary a:hover{ color: var(--ink); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding-block: clamp(56px, 14vh, 120px) clamp(48px, 10vh, 88px);
+  }
+
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+
+  .hero h1{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(40px, 8vw, 76px);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    max-width: 14ch;
+  }
+
+  .hero h1 em{
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .hero p{
+    margin-top: 22px;
+    max-width: 38ch;
+    color: var(--ink-soft);
+    font-size: clamp(15px, 1.6vw, 17px);
+  }
+
+  .scroll-cue{
+    margin-top: 56px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-cue span{
+    display:inline-block;
+    animation: bob 2.2s ease-in-out infinite;
+  }
+
+  @keyframes bob{
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery{
+    padding-block: clamp(20px, 6vh, 40px) clamp(60px, 10vh, 100px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(64px, 12vh, 120px);
+  }
+
+  .piece{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .piece:nth-child(even) .frame{
+    justify-self: end;
+  }
+
+  .frame{
+    width: min(100%, 480px);
+    position: relative;
+  }
+
+  .canvas-wrap{
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .canvas{
+    width: 100%;
+  }
+
+  .ratio-portrait .canvas{ aspect-ratio: 4 / 5; }
+  .ratio-landscape .canvas{ aspect-ratio: 5 / 4; }
+
+  .canvas--gold{
+    background:
+      radial-gradient(circle at 28% 22%, #E2B450 0%, transparent 55%),
+      radial-gradient(circle at 75% 70%, #8C6A22 0%, transparent 60%),
+      var(--wall-soft);
+  }
+  .canvas--blue{
+    background:
+      radial-gradient(circle at 70% 25%, #4A6CB0 0%, transparent 55%),
+      radial-gradient(circle at 25% 75%, #18305C 0%, transparent 60%),
+      var(--wall-soft);
+  }
+  .canvas--red{
+    background:
+      radial-gradient(circle at 30% 70%, #D85C45 0%, transparent 55%),
+      radial-gradient(circle at 75% 25%, #7A2419 0%, transparent 60%),
+      var(--wall-soft);
+  }
+  .canvas--green{
+    background:
+      radial-gradient(circle at 65% 30%, #5C9476 0%, transparent 55%),
+      radial-gradient(circle at 25% 75%, #1C4632 0%, transparent 60%),
+      var(--wall-soft);
+  }
+
+  .canvas-wrap::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 4px);
+    mix-blend-mode: multiply;
+    pointer-events:none;
+  }
+
+  .wipe{
+    position: absolute;
+    inset: 0;
+    background: var(--wall);
+    transform: translateX(0);
+    transition: transform 1s cubic-bezier(.65,0,.35,1);
+    z-index: 4;
+  }
+
+  .piece.in-view .wipe{
+    transform: translateX(101%);
+  }
+
+  .placeholder-tag{
+    position:absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 3;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: rgba(28,27,25,0.55);
+    color: var(--wall);
+    padding: 4px 8px;
+    border-radius: 2px;
+  }
+
+  .label{
+    display:flex;
+    align-items: baseline;
+    gap: 14px;
+    width: min(100%, 480px);
+  }
+
+  .piece:nth-child(even) .label{
+    justify-self: end;
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+
+  .num{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+
+  .label-body{ flex: 1; }
+
+  .title-row{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .piece:nth-child(even) .title-row{
+    justify-content: flex-end;
+  }
+
+  .piece h2{
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(20px, 2.4vw, 26px);
+  }
+
+  .swatch{
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .swatch--gold{ background: var(--gold); }
+  .swatch--blue{ background: var(--blue); }
+  .swatch--red{ background: var(--red); }
+  .swatch--green{ background: var(--green); }
+
+  .meta{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .status{
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .status--available{ color: var(--green); }
+  .status--sold{ color: var(--ink-soft); text-decoration: line-through; text-decoration-color: var(--hairline); }
+
+  /* ---------- About ---------- */
+  .about{
+    border-top: 1px solid var(--hairline);
+    padding-block: clamp(56px, 10vh, 96px);
+  }
+
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .about h3{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .about p{
+    font-size: clamp(16px, 2vw, 19px);
+    max-width: 52ch;
+    font-family: var(--serif);
+    line-height: 1.45;
+  }
+
+  /* ---------- Footer ---------- */
+  footer.site{
+    border-top: 1px solid var(--hairline);
+    padding-block: 28px;
+  }
+
+  .footer-row{
+    display:flex;
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+
+  .footer-links{
+    display:flex;
+    gap: 18px;
+  }
+
+  .footer-links a:hover{ color: var(--ink); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px){
+    .piece:nth-child(even) .frame,
+    .piece:nth-child(even) .label{
+      justify-self: start;
+    }
+    .piece:nth-child(even) .label{
+      flex-direction: row;
+      text-align: left;
+    }
+    .piece:nth-child(even) .title-row{
+      justify-content: flex-start;
+    }
+    .frame{ width: 100%; }
+    .label{ width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .wipe{ transition: none; transform: translateX(101%); }
+    .scroll-cue span{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site" id="site-header">
+  <div class="wrap header-row">
+    <a href="#top" class="wordmark">Oils by Teja</a>
+    <nav class="primary">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero wrap">
+    <p class="eyebrow">Original oil paintings</p>
+    <h1>Color, held <em>in&nbsp;oil.</em></h1>
+    <p>A small, growing collection — each piece built up slowly, in thin layers, until the color sits right. Four originals below, available to view and to own.</p>
+    <a href="#work" class="scroll-cue">View the work <span>↓</span></a>
+  </section>
+
+  <section class="gallery wrap" id="work">
+
+    <!-- Piece 01 — Replace the .canvas div below with: <img class="canvas" src="your-photo.jpg" alt="Still Life, Citrus"> -->
+    <article class="piece">
+      <div class="frame ratio-portrait">
+        <div class="canvas-wrap">
+          <div class="canvas canvas--gold"></div>
+          <span class="placeholder-tag">Replace with photo</span>
+          <div class="wipe"></div>
+        </div>
+      </div>
+      <div class="label">
+        <span class="num">01</span>
+        <div class="label-body">
+          <div class="title-row">
+            <h2>Still Life, Citrus</h2>
+            <span class="swatch swatch--gold"></span>
+          </div>
+          <p class="meta">Oil on canvas · 16 × 20 in · 2026</p>
+          <p class="status status--available">Available</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- Piece 02 -->
+    <article class="piece">
+      <div class="frame ratio-landscape">
+        <div class="canvas-wrap">
+          <div class="canvas canvas--blue"></div>
+          <span class="placeholder-tag">Replace with photo</span>
+          <div class="wipe"></div>
+        </div>
+      </div>
+      <div class="label">
+        <span class="num">02</span>
+        <div class="label-body">
+          <div class="title-row">
+            <h2>Evening, Harbor</h2>
+            <span class="swatch swatch--blue"></span>
+          </div>
+          <p class="meta">Oil on canvas · 20 × 16 in · 2026</p>
+          <p class="status status--available">Available</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- Piece 03 -->
+    <article class="piece">
+      <div class="frame ratio-portrait">
+        <div class="canvas-wrap">
+          <div class="canvas canvas--red"></div>
+          <span class="placeholder-tag">Replace with photo</span>
+          <div class="wipe"></div>
+        </div>
+      </div>
+      <div class="label">
+        <span class="num">03</span>
+        <div class="label-body">
+          <div class="title-row">
+            <h2>Portrait in Red</h2>
+            <span class="swatch swatch--red"></span>
+          </div>
+          <p class="meta">Oil on linen · 18 × 24 in · 2025</p>
+          <p class="status status--sold">Sold</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- Piece 04 -->
+    <article class="piece">
+      <div class="frame ratio-landscape">
+        <div class="canvas-wrap">
+          <div class="canvas canvas--green"></div>
+          <span class="placeholder-tag">Replace with photo</span>
+          <div class="wipe"></div>
+        </div>
+      </div>
+      <div class="label">
+        <span class="num">04</span>
+        <div class="label-body">
+          <div class="title-row">
+            <h2>Wildflowers, Late&nbsp;Summer</h2>
+            <span class="swatch swatch--green"></span>
+          </div>
+          <p class="meta">Oil on canvas · 24 × 18 in · 2025</p>
+          <p class="status status--available">Available</p>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="about wrap" id="about">
+    <div class="about-grid">
+      <h3>About</h3>
+      <p>Teja paints in oil, working in thin layers until the color settles where it should. Based in [Your City], currently taking on a small number of commissions each season.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site" id="contact">
+  <div class="wrap footer-row">
+    <span>© 2026 Oils by Teja</span>
+    <div class="footer-links">
+      <a href="mailto:hello@oilsbyteja.com">Email</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header background on scroll
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    header.classList.toggle('scrolled', window.scrollY > 8);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Reveal each piece with a wipe as it enters view
+  const pieces = document.querySelectorAll('.piece');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  pieces.forEach((piece) => observer.observe(piece));
+</script>
+
+</body>
+</html>
